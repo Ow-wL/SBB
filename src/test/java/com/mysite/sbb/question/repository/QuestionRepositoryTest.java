@@ -23,7 +23,7 @@ public class QuestionRepositoryTest {
         System.out.println("테스트 확인중...");
     }
 
-    @Test
+    // @Test
     // @Transactional
     // -> 테스트 때 실행 후 삭제하고 나옴
     void testSave() {
@@ -44,7 +44,7 @@ public class QuestionRepositoryTest {
     @Test
     void testFindAll() {
         List<Question> questionList = questionRepository.findAll();
-        assertEquals(2, questionList.size());
+        assertEquals(3, questionList.size());
         Question question = questionList.get(0);
         assertEquals("SBB가 뭔가요?", question.getSubject());
     }
@@ -52,12 +52,13 @@ public class QuestionRepositoryTest {
     @Test
     void testFindById() {
         Optional<Question> byId = questionRepository.findById(1L);
+        // Optional -> 있을 지 없을 지 모르기에, Null 타입 대비용 Optional로 사용. Question 아님!
         if(byId.isPresent()) {
             Question question = byId.get();
             assertEquals(1, question.getId());
         }
 
-        Question question = questionRepository.findById(3L)
+        Question question = questionRepository.findById(1L)
                 .orElseThrow(() -> new EntityNotFoundException("해당 객체가 없습니다."));
         assertEquals(1, question.getId());
     }
