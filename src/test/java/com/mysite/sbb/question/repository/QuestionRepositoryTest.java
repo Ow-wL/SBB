@@ -1,0 +1,64 @@
+package com.mysite.sbb.question.repository;
+
+import com.mysite.sbb.question.entity.Question;
+import jakarta.persistence.EntityNotFoundException;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@SpringBootTest
+public class QuestionRepositoryTest {
+
+    @Autowired
+    private QuestionRepository questionRepository;
+
+    @Test
+    void test() {
+        System.out.println("테스트 확인중...");
+    }
+
+    @Test
+    // @Transactional
+    // -> 테스트 때 실행 후 삭제하고 나옴
+    void testSave() {
+        Question q1 = new Question();
+        q1.setSubject("SBB가 뭔가요?");
+        q1.setContent("SBB에 대해서 알고 싶습니다.");
+        Question saved = questionRepository.save(q1);
+        assertEquals(1, saved.getId());
+
+        Question q2 = Question.builder()
+                .subject("스프링 부트도 어려운가요?")
+                .content("스프링은 왜 어렵다고 하는거죠?")
+                .build();
+        Question saved2 = questionRepository.save(q2);
+        assertEquals(2, saved2.getId());
+    }
+
+    @Test
+    void testFindAll() {
+        List<Question> questionList = questionRepository.findAll();
+        assertEquals(2, questionList.size());
+        Question question = questionList.get(0);
+        assertEquals("SBB가 뭔가요?", question.getSubject());
+    }
+
+    @Test
+    void testFindById() {
+        Optional<Question> byId = questionRepository.findById(1L);
+        if(byId.isPresent()) {
+            Question question = byId.get();
+            assertEquals(1, question.getId());
+        }
+
+        Question question = questionRepository.findById(3L)
+                .orElseThrow(() -> new EntityNotFoundException("해당 객체가 없습니다."));
+        assertEquals(1, question.getId());
+    }
+}

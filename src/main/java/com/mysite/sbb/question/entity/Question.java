@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@ToString(exclude = "")
+@ToString(exclude = "answerList")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
