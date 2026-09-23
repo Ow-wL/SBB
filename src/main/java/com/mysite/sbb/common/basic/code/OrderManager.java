@@ -2,18 +2,19 @@ package com.mysite.sbb.common.basic.code;
 
 public class OrderManager {
 
-    private HyundaiMaker hyundaiMaker;
-
+    // private HyundaiMaker maker;
+    private KiaMaker maker;
 
     public OrderManager() {
-        hyundaiMaker = new HyundaiMaker();
+        // maker = new HyundaiMaker();
+        maker = new KiaMaker();
     }
 
     public void order(){
         Money money = new Money(1000);
         System.out.println("판매상(입금) : " + money.getAmount());
         // Shift + Alt + L
-        Car car = hyundaiMaker.sell(money);
+        Car car = maker.sell(money);
         System.out.println("판매상(인수) : " + car.getName());
     }
 }
