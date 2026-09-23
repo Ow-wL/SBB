@@ -17,6 +17,7 @@ public class QuestionRepositoryTest {
 
     @Autowired
     private QuestionRepository questionRepository;
+    // Dependency Injection
 
     @Test
     void test() {
@@ -38,7 +39,7 @@ public class QuestionRepositoryTest {
                 .content("스프링은 왜 어렵다고 하는거죠?")
                 .build();
         Question saved2 = questionRepository.save(q2);
-        assertEquals(2, saved2.getId());
+        assertEquals( 2, saved2.getId());
     }
 
     @Test
