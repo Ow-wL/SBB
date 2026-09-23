@@ -4,9 +4,9 @@ public class OrderManager {
 
     private CarMaker maker;
 
-//    public OrderManager(CarMaker maker) {
-//        this.maker = maker;
-//    }
+    public OrderManager(CarMaker maker) {
+        this.maker = maker;
+    }
 
     public void setMaker(CarMaker maker) {
         this.maker = maker;
