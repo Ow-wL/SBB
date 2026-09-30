@@ -10,6 +10,13 @@ spring:
     restart:
       enabled: true
 
+    livereload:
+      enabled: true
+      port: 35729
+
+  thymeleaf:
+    cache: false
+
   ####################################
   # MySQL 설정
   ####################################
