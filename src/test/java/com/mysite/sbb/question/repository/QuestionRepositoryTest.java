@@ -101,7 +101,7 @@ public class QuestionRepositoryTest {
 
     @Test
     void testDelete() {
-        questionRepository.deleteById(1L);
+        questionRepository.deleteById(2L);
         assertEquals(1, questionRepository.count());
     }
 }
