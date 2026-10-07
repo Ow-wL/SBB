@@ -26,7 +26,7 @@ public class QuestionRepositoryTest {
         System.out.println("테스트 확인중...");
     }
 
-    // @Test
+    @Test
     // @Transactional
     // -> 테스트 때 실행 후 삭제하고 나옴 or application.yml -> ddl-auto: update를 create로 수정
     void testSave() {
