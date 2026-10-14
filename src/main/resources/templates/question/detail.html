@@ -5,7 +5,14 @@
 
 
 <div layout:fragment="content" class="container my-3">
-    <h2> 상세 페이지 </h2>
+    <h2 th:text="${question.subject}"> 제목 </h2>
+    <hr>
+    <div th:text="${question.content}"> 데이터 </div>
 
+    <br>
+    <form th:action="@{|/answer/create/${question.id}|}" method="post">
+        <textarea name="content" id="content" rows="15"></textarea>
+        <input type="submit" value="답변 등록">
+    </form>
 </div>
 </html>
