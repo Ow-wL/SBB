@@ -1,26 +1,115 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
 
+<div layout:fragment="content" class="container my-5">
 
-<div layout:fragment="content" class="container my-3">
-    <h2 th:text="${question.subject}"> 제목 </h2>
-    <hr>
-    <div th:text="${question.content}"> 데이터 </div>
+    <!-- 질문 영역 -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body p-4">
 
-    <br>
+            <h2 class="card-title fw-bold mb-3"
+                th:text="${question.subject}">
+                질문 제목
+            </h2>
 
-    <br>
-    <h5 th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
-    <div>
-        <ul>
-            <li th:each="answer : ${question.answerList}" th:text="${answer.content}"></li>
-        </ul>
+            <hr class="my-4">
+
+            <div class="card-text"
+                 style="white-space: pre-wrap;"
+                 th:text="${question.content}">
+                질문 내용
+            </div>
+
+        </div>
     </div>
-    <form th:action="@{|/answer/create/${question.id}|}" method="post">
-        <textarea name="content" id="content" rows="15"></textarea>
-        <input type="submit" value="답변 등록">
-    </form>
+
+    <!-- 답변 목록 -->
+    <div class="mb-4">
+
+        <h5 class="fw-bold mb-3">
+            <span class="badge bg-primary rounded-pill me-2"
+                  th:text="${#lists.size(question.answerList)}">
+                0
+            </span>
+            개의 답변이 있습니다.
+        </h5>
+
+        <div th:if="${#lists.isEmpty(question.answerList)}"
+             class="alert alert-light border text-muted"
+             role="alert">
+            아직 등록된 답변이 없습니다. 첫 번째 답변을 작성해 보세요.
+        </div>
+
+        <div th:each="answer : ${question.answerList}"
+             class="card mb-3 border-0 shadow-sm">
+
+            <div class="card-body p-3">
+                <div class="d-flex align-items-start">
+                    <div class="me-3">
+                        <div class="bg-primary bg-opacity-10 text-primary
+                                    rounded-circle d-flex align-items-center
+                                    justify-content-center"
+                             style="width: 40px; height: 40px;">
+                            <span class="fw-bold">A</span>
+                        </div>
+                    </div>
+
+                    <div class="flex-grow-1">
+                        <div class="text-muted small mb-2">
+                            답변
+                        </div>
+
+                        <div style="white-space: pre-wrap;"
+                             th:text="${answer.content}">
+                            답변 내용
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 답변 작성 -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0 fw-bold">답변 작성</h5>
+        </div>
+
+        <div class="card-body p-4">
+            <form th:action="@{|/answer/create/${question.id}|}"
+                  method="post">
+
+                <div class="mb-3">
+                    <label for="content" class="form-label fw-semibold">
+                        답변 내용
+                    </label>
+
+                    <textarea
+                            name="content"
+                            id="content"
+                            class="form-control"
+                            rows="5"
+                            placeholder="질문에 대한 답변을 입력하세요."
+                            required></textarea>
+
+                    <div class="form-text">
+                        질문에 도움이 되는 답변을 작성해 주세요.
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary px-4">
+                        답변 등록
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
 </div>
 </html>
