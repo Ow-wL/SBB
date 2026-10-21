@@ -5,6 +5,9 @@ import com.mysite.sbb.question.entity.Question;
 import com.mysite.sbb.question.repository.QuestionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,9 +19,10 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
 
-    public List<Question> getList() {
-        List<Question> questionList = questionRepository.findAll();
-        return questionList;
+    public Page<Question> getList(int page) {
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Question> paging = questionRepository.findAll(pageable);
+        return paging;
     }
 
     public Question getQuestion(Long id) {
