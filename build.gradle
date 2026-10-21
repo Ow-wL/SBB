@@ -23,6 +23,8 @@ dependencies {
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
 	// dependencies -> Add Starters 눌러서 추가하기
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 

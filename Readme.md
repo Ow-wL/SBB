@@ -1,6 +1,6 @@
 # 파일 구조 
 - controller -> 웹 요청과 응답을 처리
-- dto -> 계층 간 데이터 전송 
+- dto -> 계층 간 데이터 전송 (Data transform object)
 - entity -> DB 테이블과 1:1 매핑
 - repository -> DB나 파일같은 외부 I/O 작업을 처리
 - service -> 내부에서 자바 로직을 처리
@@ -9,3 +9,4 @@
 - @{} -> URL 
 - ${} -> 변수 사용
 - ~{} -> 디렉토리 경로
+- *{} -> 객체 변수
