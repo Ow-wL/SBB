@@ -4,6 +4,14 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
 
+<th:block layout:fragment="css">
+    <style>
+        .fieldError {
+            color: #b02a37;
+        }
+    </style>
+</th:block>
+
 <div layout:fragment="content" class="container my-5">
 
     <!-- 질문 영역 -->
@@ -81,8 +89,8 @@
 
         <div class="card-body p-4">
             <form th:action="@{|/answer/create/${question.id}|}"
+                  th:object="${answerDto}"
                   method="post">
-
                 <div class="mb-3">
                     <label for="content" class="form-label fw-semibold">
                         답변 내용
@@ -94,7 +102,9 @@
                             class="form-control"
                             rows="5"
                             placeholder="질문에 대한 답변을 입력하세요."
-                            required></textarea>
+                            th:field="*{content}">
+                    </textarea>
+                    <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="fieldError"> error </p>
 
                     <div class="form-text">
                         질문에 도움이 되는 답변을 작성해 주세요.

@@ -1,5 +1,6 @@
 package com.mysite.sbb.question.controller;
 
+import com.mysite.sbb.answer.dto.AnswerDto;
 import com.mysite.sbb.question.dto.QuestionDto;
 import com.mysite.sbb.question.entity.Question;
 import com.mysite.sbb.question.service.QuestionService;
@@ -32,7 +33,9 @@ public class QuestionController {
     }
 
     @GetMapping("/{id}")
-    public String detail(@PathVariable("id") Long id, Model model) {
+    public String detail(@PathVariable("id") Long id,
+                         AnswerDto answerDto,
+                         Model model) {
         log.info("===========> id : {}", id);
         Question question = questionService.getQuestion(id);
         model.addAttribute("question", question);
