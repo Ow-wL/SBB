@@ -24,6 +24,10 @@
                     <a th:href="@{|/question/${question.id}|}"
                        th:text="${question.subject}"
                        class="text-dark text-decoration-none">게시글 제목</a>
+                    <span class="badge bg-primary text-white ms-2"
+                          th:if="${#lists.size(question.answerList) > 0}"
+                          th:text="${#lists.size(question.answerList)}">
+                    </span>
                 </td>
                 <td th:text="${#temporals.format(question.created, 'yyyy-MM-dd HH:mm')}">
                     2026-10-07 10:00
