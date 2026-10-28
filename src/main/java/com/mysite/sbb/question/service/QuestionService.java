@@ -20,7 +20,7 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
 
     public Page<Question> getList(int page) {
-        Pageable pageable = PageRequest.of(0, 10);
+        Pageable pageable = PageRequest.of(page, 10);
         Page<Question> paging = questionRepository.findAll(pageable);
         return paging;
     }
