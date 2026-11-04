@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<th:block layout:fragment="css">
+    <style>
+        .fieldError {
+            color: #b02a37;
+        }
+    </style>
+</th:block>
+
+<div layout:fragment="content" class="container my-3">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            <h3 class="mb-4"> 도서 리뷰 작성 </h3>
+
+            <form th:action="@{/book/create}" th:object="${bookDto}" method="post">
+                <!-- 제목 -->
+                <div class="mb-3">
+                    <label for="subject" class="form-label">
+                        제목
+                    </label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="subject"
+                            name="subject"
+                            th:field="*{subject}"
+                            placeholder="도서 제목을 입력하세요."
+                    >
+                    <p th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}" class="fieldError"> error </p>
+                </div>
+
+                <!-- 저자 -->
+                <div class="mb-3">
+                    <label for="content" class="form-label">
+                        저자
+                    </label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="author"
+                            name="author"
+                            th:field="*{author}"
+                            placeholder="저자를 입력하세요."
+                    >
+                    <p th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="fieldError"> error </p>
+                </div>
+
+                <!-- 평점 -->
+                <div class="mb-3">
+                    <label for="content" class="form-label">
+                        평점
+                    </label>
+                    <input
+                            class="form-control"
+                            id="rating"
+                            name="rating"
+                            th:field="*{rating}"
+                            placeholder="1~5 숫자를 입력하세요."
+                            type="TEXT"
+                    >
+                    <p th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}" class="fieldError"> error </p>
+                </div>
+
+                <!-- 감상평 -->
+                <div class="mb-3">
+                    <label for="content" class="form-label">
+                        감상평
+                    </label>
+                    <textarea
+                            class="form-control"
+                            id="content"
+                            name="content"
+                            rows="6"
+                            th:field="*{content}"
+                            placeholder="감상평을 입력하세요."
+                    ></textarea>
+                    <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="fieldError"> error </p>
+                </div>
+
+                <!-- 저장 버튼 -->
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary">
+                        리뷰 저장
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+</html>
