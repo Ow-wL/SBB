@@ -25,6 +25,10 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+	// 추가(security)
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
 	// dependencies -> Add Starters 눌러서 추가하기
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
@@ -33,6 +37,10 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-thymeleaf-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+
+	// 추가(security)
+	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.mockito:mockito-core:5.18.0'
 
 	// mysql connector 9.7.0 자동 -> 8.4.0 으로 변경
 	// runtimeOnly 'com.mysql:mysql-connector-j'
