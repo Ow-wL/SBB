@@ -17,6 +17,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.formLogin(Customizer.withDefaults());
         http.logout(Customizer.withDefaults());
+        //http.csrf(csrf -> csrf.disable());
 
         http.authorizeHttpRequests((authorize) -> authorize
                 .requestMatchers("/css/**", "/js/**").permitAll()

@@ -21,34 +21,40 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    @GetMapping("/login")
+    public String login(MemberDto memberDto) {
+        return "member/login";
+    }
+
     @GetMapping("/signup")
-    public String signup(MemberDto memberDto) {
-        return "member/signup";
+    public String signUp(Model model) {
+        model.addAttribute("memberDto", new MemberDto());
+        return "member/signup"; // signup.html 파일을 반환
     }
 
     @PostMapping("/signup")
-    public String signup(@Valid MemberDto memberDto, BindingResult bindingResult, Model model) {
-        log.info("============= memberDto={}", memberDto);
-        if(bindingResult.hasErrors()) {
+    public String signUp(@Valid MemberDto memberDto, BindingResult bindingResult, Model model) {
+        log.info("=====> memberDto: {}", memberDto);
+
+        if (bindingResult.hasErrors()) {
             return "member/signup";
         }
+
         if (!memberDto.getPassword1().equals(memberDto.getPassword2())) {
+            // 필드명, 오류 코드, 오류 메시지
             bindingResult.rejectValue("password2", "passwordInCorrect", "2개의 패스워드가 일치하지 않습니다.");
-            return "member/signup";
+            return "member/signup"; // 스크립트 처리
         }
 
         try {
             memberService.createMember(memberDto);
         } catch(DataIntegrityViolationException e){
             log.info("=============================회원가입 실패: 이미 등록된 사용자입니다.");
-            //model.addAttribute("errorMsg","이미 등록된 사용자입니다.");
-            bindingResult.rejectValue("errorMsg", "existUser", "이미 등록된 사용자입니다.");
+            model.addAttribute("errorMsg","이미 등록된 사용자입니다.");
             return "member/signup";
         } catch(Exception e){
             log.info("=============================회원가입 실패: " + e.getMessage());
             model.addAttribute("errorMsg", e.getMessage());
-            //bindingResult.rejectValue("errorMsg", "signupError", e.getMessage());
-
             return "member/signup";
         }
 
