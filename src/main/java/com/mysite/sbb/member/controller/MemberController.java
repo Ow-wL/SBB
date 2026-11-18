@@ -41,11 +41,14 @@ public class MemberController {
             memberService.createMember(memberDto);
         } catch(DataIntegrityViolationException e){
             log.info("=============================회원가입 실패: 이미 등록된 사용자입니다.");
-            model.addAttribute("errorMessage","이미 등록된 사용자입니다.");
+            //model.addAttribute("errorMsg","이미 등록된 사용자입니다.");
+            bindingResult.rejectValue("errorMsg", "existUser", "이미 등록된 사용자입니다.");
             return "member/signup";
         } catch(Exception e){
             log.info("=============================회원가입 실패: " + e.getMessage());
-            model.addAttribute("errorMessage", e.getMessage());
+            model.addAttribute("errorMsg", e.getMessage());
+            //bindingResult.rejectValue("errorMsg", "signupError", e.getMessage());
+
             return "member/signup";
         }
 
