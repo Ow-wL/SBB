@@ -1,5 +1,7 @@
 package com.mysite.sbb.member.entity;
 
+import com.mysite.sbb.audit.BaseEntity;
+import com.mysite.sbb.audit.BaseTimeEntity;
 import com.mysite.sbb.member.constant.Department;
 import com.mysite.sbb.member.constant.Gender;
 import jakarta.persistence.*;
@@ -17,7 +19,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @EntityListeners(AuditingEntityListener.class)
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
