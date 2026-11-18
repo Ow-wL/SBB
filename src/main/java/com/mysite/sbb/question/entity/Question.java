@@ -2,6 +2,7 @@ package com.mysite.sbb.question.entity;
 
 import com.mysite.sbb.answer.entity.Answer;
 import com.mysite.sbb.audit.BaseEntity;
+import com.mysite.sbb.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -39,4 +40,8 @@ public class Question extends BaseEntity {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Answer> answerList;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member author;
 }
