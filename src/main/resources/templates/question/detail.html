@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/layout}">
 
 <th:block layout:fragment="css">
@@ -29,6 +30,12 @@
                  style="white-space: pre-wrap;"
                  th:text="${question.content}">
                 질문 내용
+            </div>
+            <!-- 작성자 추가 -->
+            <div>
+                <div>
+
+                </div>
             </div>
 
         </div>
@@ -102,6 +109,16 @@
                             class="form-control"
                             rows="5"
                             placeholder="질문에 대한 답변을 입력하세요."
+                            sec:authorize="isAnonymous()" disabled
+                            th:field="*{content}">
+                    </textarea>
+                    <textarea
+                            name="content"
+                            id="content"
+                            class="form-control"
+                            rows="5"
+                            placeholder="질문에 대한 답변을 입력하세요."
+                            sec:authorize="isAuthenticated()"
                             th:field="*{content}">
                     </textarea>
                     <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="fieldError"> error </p>
