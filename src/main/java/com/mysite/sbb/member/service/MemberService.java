@@ -15,7 +15,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -58,5 +57,12 @@ public class MemberService implements UserDetailsService {
         }
 
         return new User(member.getUsername(), member.getPassword(), authorities);
+    }
+
+    public Member getMember(String username) {
+        Member member = memberRepository.findByUsername(username).orElseThrow(
+                () -> new UsernameNotFoundException("해당 사용자를 찾을 수 없습니다. ==> " + username)
+        );
+        return member;
     }
 }
