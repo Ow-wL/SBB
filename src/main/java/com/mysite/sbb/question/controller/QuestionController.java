@@ -9,17 +9,16 @@ import com.mysite.sbb.question.service.QuestionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @Slf4j
@@ -70,7 +69,7 @@ public class QuestionController {
     public String createQuestion(@Valid QuestionDto questionDto,
                                  BindingResult bindingResult,
                                  Principal principal) { // 현재 로그인한 계정 정보 가져오기
-        log.info("===========> questionDto : {}", questionDto);
+        log.info("===========> create - questionDto : {}", questionDto);
         if(bindingResult.hasErrors()) {
             return "question/inputform";
         }
@@ -79,5 +78,45 @@ public class QuestionController {
 
         questionService.createQuestion(questionDto, member);
         return "redirect:/question/list";
+    }
+
+    //href -> Get 방식
+    // 질문 수정을 위해 입력 폼으로 이동
+    @PreAuthorize("isAuthenticated()") // 로그인한 사용자만 접근 가능
+    @GetMapping("/modify/{id}")
+    public String modifyQuestion(@PathVariable("id") Long id,
+                                 QuestionDto questionDto,
+                                 Principal principal) {
+
+        Question question = questionService.getQuestion(id);
+        if(!question.getAuthor().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
+        }
+        questionDto.setSubject(question.getSubject());
+        questionDto.setContent(question.getContent());
+        return "question/inputForm";
+    }
+
+    // 질문 수정하기
+    @PreAuthorize("isAuthenticated()") // 로그인한 사용자만 접근 가능
+    @PostMapping("/modify/{id}")
+    public String modifyQuestion(@PathVariable("id") Long id,
+                                 @Valid QuestionDto questionDto,
+                                 BindingResult bindingResult,
+                                 Principal principal) {
+        log.info("===========> modify - questionDto : {}", questionDto);
+
+        if (bindingResult.hasErrors()) {
+            return "question/inputForm";
+        }
+
+        Question question = questionService.getQuestion(id);
+        if(!question.getAuthor().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
+        }
+
+        questionService.modifyQuestion(question, questionDto);
+
+        return "redirect:/question/" + id;
     }
 }
