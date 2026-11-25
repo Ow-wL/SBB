@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,6 +49,7 @@ public class QuestionController {
         return "question/detail";
     }
 
+    @PreAuthorize("isAuthenticated()") // 로그인 한 사용자만 접근 가능
     @GetMapping("/create")
     public String createInputForm(QuestionDto questionDto) {
         return "question/inputform";
@@ -63,10 +65,11 @@ public class QuestionController {
 //    }
 
     // Pricipal 추가 - java.security
+    @PreAuthorize("isAuthenticated()") // 로그인 한 사용자만 접근 가능
     @PostMapping("/create")
     public String createQuestion(@Valid QuestionDto questionDto,
                                  BindingResult bindingResult,
-                                 Principal principal) {
+                                 Principal principal) { // 현재 로그인한 계정 정보 가져오기
         log.info("===========> questionDto : {}", questionDto);
         if(bindingResult.hasErrors()) {
             return "question/inputform";

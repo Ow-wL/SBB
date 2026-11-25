@@ -117,7 +117,7 @@ public class QuestionRepositoryTest {
                     .subject("테스트 데이터 입니다. [" + i + "]")
                     .content("내용입니다. [" + i + "]")
                     .build();
-            questionService.createQuestion(questionDto);
+            //questionService.createQuestion(questionDto);
         }
     }
 }
